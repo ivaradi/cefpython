@@ -280,6 +280,9 @@ cdef class PyBrowser:
             # FocusHandler
             self.allowedClientCallbacks += ["OnTakeFocus", "OnSetFocus",
                                             "OnGotFocus"]
+            # DownloadHandler
+            self.allowedClientCallbacks += ["OnBeforeDownload",
+                    "OnDownloadUpdated"]
 
         if name not in self.allowedClientCallbacks:
             raise Exception("Browser.SetClientCallback() failed: unknown "

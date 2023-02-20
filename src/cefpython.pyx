@@ -305,6 +305,9 @@ from cef_views cimport *
 from cef_log cimport *
 from cef_file_util cimport *
 
+from cef_download_item cimport *
+from cef_download_handler cimport *
+
 # -----------------------------------------------------------------------------
 # GLOBAL VARIABLES
 
@@ -375,6 +378,7 @@ include "app.pyx"
 include "drag_data.pyx"
 include "helpers.pyx"
 include "image.pyx"
+include "download.pyx"
 
 # Handlers
 include "handlers/accessibility_handler.pyx"
@@ -390,6 +394,7 @@ include "handlers/resource_handler.pyx"
 include "handlers/request_handler.pyx"
 include "handlers/v8context_handler.pyx"
 include "handlers/v8function_handler.pyx"
+include "handlers/download_handler.pyx"
 
 # -----------------------------------------------------------------------------
 # Utility functions to provide settings to the C++ browser process code.
