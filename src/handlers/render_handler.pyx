@@ -43,10 +43,11 @@ cdef public cpp_bool RenderHandler_GetRootScreenRect(
                 cefRect.width = pyRect[2]
                 cefRect.height = pyRect[3]
                 return True
-            else:
-                return False
-        else:
-            return False
+        cefRect.x = 0
+        cefRect.y = 0
+        cefRect.width = 1
+        cefRect.height = 1
+        return True
     except:
         (exc_type, exc_value, exc_trace) = sys.exc_info()
         sys.excepthook(exc_type, exc_value, exc_trace)
@@ -70,10 +71,11 @@ cdef public cpp_bool RenderHandler_GetViewRect(
                 cefRect.width = pyRect[2]
                 cefRect.height = pyRect[3]
                 return True
-            else:
-                return False
-        else:
-            return False
+        cefRect.x = 0
+        cefRect.y = 0
+        cefRect.width = 1
+        cefRect.height = 1
+        return True
     except:
         (exc_type, exc_value, exc_trace) = sys.exc_info()
         sys.excepthook(exc_type, exc_value, exc_trace)
