@@ -9,3 +9,4 @@ cdef extern from "client_handler/request_context_handler.h":
     cdef cppclass RequestContextHandler:
         RequestContextHandler(CefRefPtr[CefBrowser] browser)
         void SetBrowser(CefRefPtr[CefBrowser] browser)
+        void ClearBrowser()

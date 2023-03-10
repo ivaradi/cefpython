@@ -32,6 +32,10 @@ public:
         browser_ = browser;
     }
 
+    void ClearBrowser() {
+        browser_.reset();
+    }
+
 
     // virtual CefRefPtr<CefCookieManager> GetCookieManager() OVERRIDE;
     // virtual bool OnBeforePluginLoad(const CefString& mime_type,

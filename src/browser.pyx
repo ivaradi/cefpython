@@ -203,6 +203,8 @@ cdef class PyBrowser:
     cdef public int gwlExStyle
     cdef public tuple windowRect
 
+    cdef CefRefPtr[RequestContextHandler] requestContextHandler
+
     # C-level attributes are initialized to 0 automatically.
     cdef void* imageBuffer
 
@@ -231,6 +233,9 @@ cdef class PyBrowser:
     def __dealloc__(self):
         if self.imageBuffer:
             free(self.imageBuffer)
+
+    cdef SetRequestContextHandler(self, CefRefPtr[RequestContextHandler] handler):
+        self.requestContextHandler = handler
 
     cpdef py_void SetClientCallback(self, py_string name, object callback):
         if not self.allowedClientCallbacks:
@@ -402,6 +407,8 @@ cdef class PyBrowser:
                 .GetCookieManager(
                         <CefRefPtr[CefCompletionCallback]?>nullptr) \
                 .get().FlushStore(<CefRefPtr[CefCompletionCallback]?>nullptr)
+
+        self.requestContextHandler.get().ClearBrowser()
 
         cdef int browserId = self.GetCefBrowser().get().GetIdentifier()
         self.GetCefBrowserHost().get().CloseBrowser(bool(forceClose))

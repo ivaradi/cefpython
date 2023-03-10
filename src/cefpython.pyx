@@ -800,6 +800,7 @@ def CreateBrowserSync(windowInfo=None,
     cdef PyBrowser pyBrowser = GetPyBrowser(cefBrowser)
     pyBrowser.SetUserData("__outerWindowHandle",
                           int(windowInfo.parentWindowHandle))
+    pyBrowser.SetRequestContextHandler(requestContextHandler)
 
     """
     if cef_window.get():
@@ -946,8 +947,8 @@ def Shutdown():
     # Release shared request context. In the past this was sometimes
     # causing segmentation fault. See Issue #333:
     # https://github.com/cztomczak/cefpython/issues/333
-    # Debug("Free g_shared_request_context")
-    # g_shared_request_context.Assign(nullptr)
+    Debug("Free g_shared_request_context")
+    g_shared_request_context.Assign(nullptr)
 
     # Release external message pump before CefShutdown, so that
     # message pump timer is killed.
