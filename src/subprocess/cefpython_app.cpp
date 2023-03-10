@@ -235,27 +235,6 @@ void CefPythonApp::OnBeforeChildProcessLaunch(
 // #endif // BROWSER_PROCESS
 // }
 
-#ifdef BROWSER_PROCESS
-#if defined(OS_LINUX)
-CefRefPtr<CefPrintHandler> CefClient::GetPrintHandler()
-{
-    // For print handler to work GTK must be initialized. This is
-    // required for some of the examples.
-    // --
-    // A similar code is in client_handler/x11.cpp. If making changes here,
-    // make changes there as well.
-    GdkDisplay *gdk_display = gdk_display_get_default();
-    if (!gdk_display)
-    {
-        LOG(INFO) << "[Browser process] Initialize GTK";
-        gtk_init(0, NULL);
-        InstallX11ErrorHandlers();
-    }
-    return print_handler_;
-}
-#endif
-#endif
-
 void CefPythonApp::OnScheduleMessagePumpWork(int64 delay_ms)
 {
 #ifdef BROWSER_PROCESS

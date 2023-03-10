@@ -28,7 +28,6 @@ bool DialogHandler::OnFileDialog(CefRefPtr<CefBrowser> browser,
                                          title,
                                          default_file_path,
                                          accept_filters,
-                                         selected_accept_filter,
                                          callback);
 #else
     return false;

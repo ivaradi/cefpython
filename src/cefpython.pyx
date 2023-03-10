@@ -480,17 +480,6 @@ def Initialize(applicationSettings=None, commandLineSwitches=None, **kwargs):
     del command_line_switches
     del commandLineSwitches
 
-    IF UNAME_SYSNAME == "Linux":
-        # Fix Issue #231 - Discovery of the "icudtl.dat" file fails on Linux.
-        cdef str py_module_dir = GetModuleDirectory()
-        cdef CefString cef_module_dir
-        PyToCefString(py_module_dir, cef_module_dir)
-        CefOverridePath(PK_DIR_EXE, cef_module_dir)\
-                or Debug("ERROR: CefOverridePath failed")
-        CefOverridePath(PK_DIR_MODULE, cef_module_dir)\
-                or Debug("ERROR: CefOverridePath failed")
-    # END IF UNAME_SYSNAME == "Linux":
-
     if not application_settings:
         application_settings = {}
 
@@ -608,8 +597,13 @@ def Initialize(applicationSettings=None, commandLineSwitches=None, **kwargs):
         cdef HINSTANCE hInstance = GetModuleHandle(NULL)
         cdef CefMainArgs cefMainArgs = CefMainArgs(hInstance)
     ELIF UNAME_SYSNAME == "Linux":
-        # TODO: use the CefMainArgs(int argc, char** argv) constructor.
-        cdef CefMainArgs cefMainArgs
+       cdef int argc = len(sys.argv)
+       cdef char** argv
+       args = [bytes(x, "utf-8") for x in sys.argv]
+       argv = <char**>malloc(sizeof(char*) * argc)
+       for (idx, s) in enumerate(args):
+           argv[idx] = s
+       cdef CefMainArgs cefMainArgs = CefMainArgs(argc, argv)
     ELIF UNAME_SYSNAME == "Darwin":
         # TODO: use the CefMainArgs(int argc, char** argv) constructor.
         cdef CefMainArgs cefMainArgs
@@ -970,10 +964,11 @@ def Shutdown():
     IF UNAME_SYSNAME == "Darwin":
         MacShutdown()
 
-def SetOsModalLoop(py_bool modalLoop):
-    cdef cpp_bool cefModalLoop = bool(modalLoop)
-    with nogil:
-        CefSetOSModalLoop(cefModalLoop)
+IF UNAME_SYSNAME == "Windows":
+    def SetOsModalLoop(py_bool modalLoop):
+        cdef cpp_bool cefModalLoop = bool(modalLoop)
+        with nogil:
+            CefSetOSModalLoop(cefModalLoop)
 
 cpdef py_void SetGlobalClientCallback(py_string name, object callback):
     global g_globalClientCallbacks
