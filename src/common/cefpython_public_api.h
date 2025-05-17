@@ -56,6 +56,8 @@
 #include "../../build/build_cefpython/cefpython_py311_fixed.h"
 #elif PY_MINOR_VERSION == 12
 #include "../../build/build_cefpython/cefpython_py312_fixed.h"
+#elif PY_MINOR_VERSION == 13
+#include "../../build/build_cefpython/cefpython_py313_fixed.h"
 #else
 #error "Unsupported Python version, please check cefpython_public_api.h"
 #endif // PY_MINOR_VERSION

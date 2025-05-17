@@ -66,7 +66,7 @@ cdef class PyResponse:
             headerMap[key] = value
         return headerMap
 
-    cpdef list GetHeaderMultimap(self):
+    cdef list GetHeaderMultimap(self):
         cdef cpp_multimap[CefString, CefString] cefHeaderMap
         self.GetCefResponse().get().GetHeaderMap(cefHeaderMap)
         cdef list pyHeaderMultimap = []
@@ -87,7 +87,7 @@ cdef class PyResponse:
 
     cpdef py_void SetHeaderMap(self, dict headerMap):
         assert len(headerMap) > 0, "headerMap param is empty"
-        cpdef list headerMultimap = []
+        cdef list headerMultimap = []
         cdef object key
         for key in headerMap:
             headerMultimap.append((str(key), str(headerMap[key])))
