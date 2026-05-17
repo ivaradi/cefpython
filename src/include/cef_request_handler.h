@@ -162,7 +162,7 @@ class CefRequestHandler : public virtual CefBaseRefCounted {
   ///
   /*--cef(optional_param=realm,optional_param=scheme)--*/
   virtual bool GetAuthCredentials(CefRefPtr<CefBrowser> browser,
-                                  const CefString& origin_url,
+                                  CefRefPtr<CefFrame>,
                                   bool isProxy,
                                   const CefString& host,
                                   int port,
